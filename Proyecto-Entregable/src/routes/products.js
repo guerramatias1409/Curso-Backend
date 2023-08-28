@@ -1,10 +1,15 @@
 const express = require('express');
 const router = express.Router();
-const { v4: uuidv4 } = require('uuid');
 const fs = require('fs');
 const filePath = './src/products.json';
 
 let products = [];
+let lastProductId = 10;
+
+function generateId(){
+    lastProductId++;
+    return lastProductId;
+}
 
 function loadProducts() {
     try {
@@ -45,7 +50,7 @@ router.post('/', (req, res) => {
         res.status(404).json({ error: 'Ya existe un producto con el código ingresado' });
         return;
     }
-    const newProduct = { id: uuidv4(), ...req.body };
+    const newProduct = { id: generateId(), ...req.body, ...{status: true}};
     products.push(newProduct);
     saveDataToFile(filePath, products);
     res.json({ message: 'Producto agregado con éxito', product: newProduct });

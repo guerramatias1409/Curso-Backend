@@ -1,10 +1,15 @@
 const express = require('express');
 const router = express.Router();
-const { v4: uuidv4 } = require('uuid');
 const fs = require('fs');
 const filePath = './src/carts.json';
 
+let lastCartId = 5; 
 let carts = [];
+
+function generateId(){
+    lastCartId++;
+    return lastCartId;
+}
 
 function loadCarts() {
     try {
@@ -22,7 +27,7 @@ function saveDataToFile(filePath, data) {
 
 router.post('/', (req, res) => {
     loadCarts()
-    const newCart = { id: uuidv4(), products: [] };
+    const newCart = { id: generateId(), products: [] };
     carts.push(newCart);
     saveDataToFile(filePath, carts);
     res.json({ message: 'Carrito creado con éxito', cart: newCart });
