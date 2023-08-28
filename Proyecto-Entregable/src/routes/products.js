@@ -2,14 +2,16 @@ const express = require('express');
 const router = express.Router();
 const { v4: uuidv4 } = require('uuid');
 const fs = require('fs');
+const filePath = './src/products.json';
 
 let products = [];
 
 function loadProducts() {
     try {
-        const data = fs.readFileSync('../productos.json', 'utf-8');
+        const data = fs.readFileSync(filePath, 'utf-8');
         products = JSON.parse(data);
     } catch (error) {
+        console.log('ERROR AL LEER PRODUCTS')
         products = [];
     }
 }
@@ -27,7 +29,7 @@ router.get('/', (req, res) => {
 
 router.get('/:pid', (req, res) => {
     loadProducts();
-    const pid = req.params.pid;
+    const pid = parseInt(req.params.pid);
     const product = products.find((product) => product.id === pid);
     if (!product) {
         res.status(404).json({ error: 'Producto no encontrado' });
@@ -37,20 +39,26 @@ router.get('/:pid', (req, res) => {
 });
 
 router.post('/', (req, res) => {
+    loadProducts();
+    const productExists = products.some(product => product.code === req.body.code);
+    if(productExists){
+        res.status(404).json({ error: 'Ya existe un producto con el código ingresado' });
+        return;
+    }
     const newProduct = { id: uuidv4(), ...req.body };
     products.push(newProduct);
-    saveDataToFile('../productos.json', products);
+    saveDataToFile(filePath, products);
     res.json({ message: 'Producto agregado con éxito', product: newProduct });
 });
 
 router.put('/:pid', (req, res) => {
     loadProducts();
-    const pid = req.params.pid;
+    const pid = parseInt(req.params.pid);
     const updatedProduct = req.body;
     const productIndex = products.findIndex((product) => product.id === pid);
     if (productIndex !== -1) {
         products[productIndex] = { ...products[productIndex], ...updatedProduct };
-        saveDataToFile('../productos.json', products);
+        saveDataToFile(filePath, products);
         res.json({ message: 'Producto actualizado con éxito', product: products[productIndex] });
     } else {
         res.status(404).json({ error: 'Producto no encontrado' });
@@ -59,11 +67,11 @@ router.put('/:pid', (req, res) => {
 
 router.delete('/:pid', (req, res) => {
     loadProducts();
-    const pid = req.params.pid;
+    const pid = parseInt(req.params.pid);
     const productIndex = products.findIndex((product) => product.id === pid);
     if (productIndex !== -1) {
         const deletedProduct = products.splice(productIndex, 1)[0];
-        saveDataToFile('../productos.json', products);
+        saveDataToFile(filePath, products);
         res.json({ message: 'Producto eliminado con éxito', product: deletedProduct });
     } else {
         res.status(404).json({ error: 'Producto no encontrado' });
