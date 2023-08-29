@@ -5,17 +5,22 @@ class ProductManager {
     #path
 
     constructor(path) {
-      this.#products = [];
+      this.#init()
       this.#path = path;
+      this.#products = [];
       this.lastProductId = 0;
+    }
+
+    #init = async () => {
+      if (!fs.existsSync(this.#path)) {
+        //Create file if not exists
+        await fs.promises.writeFile(this.#path, JSON.stringify([], null, 2), 'utf-8');
+      }
     }
 
     loadProducts = async(limit) => {
       try {
-        if(!fs.existsSync(this.#path)){
-          //Create file if not exists
-          await fs.promises.writeFile(this.#path, JSON.stringify([], null, 2), 'utf-8');
-        }
+        if (!fs.existsSync(this.#path)) return 'Error: El archivo no existe';
         const data = await fs.promises.readFile(this.#path, 'utf-8');
         const products = JSON.parse(data);
         this.#products = limit > 0 ? products.slice(0, limit) : products;
@@ -27,6 +32,7 @@ class ProductManager {
     }
 
     saveProducts = async() => {
+      if (!fs.existsSync(this.#path)) return 'Error: El archivo no existe';
       await fs.promises.writeFile(this.#path, JSON.stringify(this.#products, null, 2), 'utf-8');
     }
   
