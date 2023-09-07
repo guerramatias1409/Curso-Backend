@@ -1,12 +1,13 @@
 [
   {
     "id": 1,
-    "title": "Primer Producto ACTUALIZADO",
+    "title": "Primer Producto",
     "description": "Descripcion primer producto",
     "price": 100,
     "thumbnail": "Sin imagen",
     "code": "abc1",
-    "stock": 25
+    "stock": 25,
+    "status": true
   },
   {
     "id": 2,
@@ -15,7 +16,8 @@
     "price": 200,
     "thumbnail": "Sin imagen",
     "code": "abc2",
-    "stock": 25
+    "stock": 25,
+    "status": true
   },
   {
     "id": 3,
@@ -24,7 +26,8 @@
     "price": 300,
     "thumbnail": "Sin imagen",
     "code": "abc3",
-    "stock": 25
+    "stock": 25,
+    "status": true
   },
   {
     "id": 4,
@@ -33,7 +36,8 @@
     "price": 400,
     "thumbnail": "Sin imagen",
     "code": "abc4",
-    "stock": 25
+    "stock": 25,
+    "status": true
   },
   {
     "id": 5,
@@ -42,7 +46,8 @@
     "price": 200,
     "thumbnail": "Sin imagen",
     "code": "abc5",
-    "stock": 25
+    "stock": 25,
+    "status": true
   },
   {
     "id": 6,
@@ -51,7 +56,8 @@
     "price": 600,
     "thumbnail": "Sin imagen",
     "code": "abc6",
-    "stock": 25
+    "stock": 25,
+    "status": true
   },
   {
     "id": 7,
@@ -60,25 +66,28 @@
     "price": 700,
     "thumbnail": "Sin imagen",
     "code": "abc7",
-    "stock": 25
+    "stock": 25,
+    "status": true
   },
   {
     "id": 8,
     "title": "Octavo Producto",
     "description": "Descripcion octavo producto",
-    "price": 800,
+    "price": 200,
     "thumbnail": "Sin imagen",
-    "code": "abc8",
-    "stock": 25
+    "code": "abc10",
+    "stock": 25,
+    "status": true
   },
   {
     "id": 9,
     "title": "Noveno Producto",
     "description": "Descripcion noveno producto",
-    "price": 900,
+    "price": 200,
     "thumbnail": "Sin imagen",
-    "code": "abc9",
-    "stock": 25
+    "code": "abc10",
+    "stock": 25,
+    "status": true
   },
   {
     "id": 10,
@@ -87,6 +96,7 @@
     "price": 200,
     "thumbnail": "Sin imagen",
     "code": "abc10",
-    "stock": 25
+    "stock": 25,
+    "status": true
   }
 ]
